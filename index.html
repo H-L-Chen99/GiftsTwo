@@ -1,11 +1,258 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+  <title>交換禮物卡片</title>
+  <style>
+    body {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      background: url('./img/BGC.jpg') no-repeat center center fixed;
+      background-size: cover;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .input-container {
+      display: none;
+      text-align: center;
+      animation: slideIn 0.8s ease-in-out;
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateY(-100%);
+      }
+
+      to {
+        transform: translateY(0);
+      }
+    }
+
+    .input-container label {
+      font-size: 18px;
+      margin-bottom: 10px;
+      display: block;
+      color: #fff;
+    }
+
+    .input-container input {
+      width: 100%;
+      padding: 10px;
+      box-sizing: border-box;
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+
+    .input-container button {
+      background-color: #ff4081;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+      margin-right: 10px;
+    }
+
+    .input-container button:hover {
+      background-color: #d81b60;
+    }
+
+    .skip-button {
+      background-color: #3f51b5;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+
+    .skip-button:hover {
+      background-color: #1a237e;
+    }
+
+    .card {
+      width: 300px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      display: none;
+    }
+
+    .card img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px 10px 0 0;
+    }
+
+    .card-content {
+      padding: 20px;
+    }
+
+    .card-title {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .card-description {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 20px;
+    }
+
+    .gift-image {
+      height: 50px;
+      width: 60%;
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+
+    .card-button {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #ff4081;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+
+    .card-button:hover {
+      background-color: #d81b60;
+    }
+
+    .thank-you-message {
+      display: none;
+      font-size: 20px;
+      text-align: center;
+      margin-top: 20px;
+      color: #ff9800;
+    }
+  </style>
 </head>
+
 <body>
-  Document
+  <div
+    class="input-container"
+    id="inputContainer"
+  >
+    <label for="name" style="color: #666;">您的暱稱:</label>
+    <input
+      type="text"
+      id="name"
+      placeholder="暱稱"
+      style="width: 75%;"
+    >
+    <button onclick="showCard()">打開卡片</button>
+    <button
+      class="skip-button"
+      onclick="skipInput()"
+    >不輸入</button>
+  </div>
+
+  <div
+    class="card"
+    id="generatedCard"
+  >
+    <img
+      src="./img/55.png"
+      alt="Card Image"
+    >
+    <div class="card-content">
+      <div
+        class="card-title"
+        id="cardTitle"
+      >Card</div>
+  <img
+    class="gift-image"
+style="width: 150px;"    
+src="./img/BLACK.jpg"
+    alt="Gift Image"
+  >
+    
+      <pre class="card-description">
+      在考慮了好多組合後選擇的禮物🎁
+      肝膽香皂🧼-肝膽相照
+      不論將來會如何，享受現在的快樂
+      繼續一起肝膽相照喔🥰</pre>
+      <a
+        href="#"
+        class="card-button"
+        onclick="viewDetails()"
+      >關閉卡片 88~</a>
+      <div
+        class="thank-you-message"
+        id="thankYouMessage"
+      >Thank You</div>
+    </div>
+  </div>
+
+  <script>
+    // Show input container after a brief delay
+    setTimeout(() => {
+      document.querySelector('.input-container').style.display = 'block';
+    }, 350); // Set the delay time in milliseconds
+
+    function showCard() {
+      const name = document.getElementById('name').value;
+      const cardTitle = document.getElementById('cardTitle');
+      const inputContainer = document.querySelector('.input-container');
+      const generatedCard = document.getElementById('generatedCard');
+
+      // Update card title with the entered name or default to "妳" if skipped
+      cardTitle.textContent = name ? `Dear ${name}!` : 'Dear 不想輸入暱稱的妳!';
+
+      // Show the generated card
+      generatedCard.style.display = 'block';
+
+      // Hide the input container
+      inputContainer.style.display = 'none';
+    }
+
+    function skipInput() {
+      const cardTitle = document.getElementById('cardTitle');
+      const inputContainer = document.querySelector('.input-container');
+      const generatedCard = document.getElementById('generatedCard');
+
+      // Default card title to "妳" if skipped
+      cardTitle.textContent = 'Dear 不想輸入暱稱的妳!';
+
+      // Show the generated card
+      generatedCard.style.display = 'block';
+
+      // Hide the input container
+      inputContainer.style.display = 'none';
+    }
+
+    function viewDetails() {
+      const cardContent = document.querySelector('.card-content');
+      const thankYouMessage = document.getElementById('thankYouMessage');
+
+      // Change card image to orange cat
+      const cardImage = document.querySelector('.card img');
+      cardImage.src = './img/100).jpg';
+
+      // Add title "Thank You"
+      thankYouMessage.style.display = 'block';
+
+      // Hide card content
+      cardContent.style.display = 'none';
+    }
+  </script>
 </body>
+
 </html>
